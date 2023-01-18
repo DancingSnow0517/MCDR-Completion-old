@@ -9,16 +9,12 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.FileReader;
 import java.io.Reader;
-import java.util.Optional;
 
 import static net.minecraft.server.command.CommandManager.literal;
 
@@ -30,7 +26,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
     public static Logger LOGGER = LogManager.getLogger();
 
     public static ModConfig modConfig;
-    public static Optional<NodeData> nodeData;
+    public static NodeData nodeData = null;
 
     @Override
     public void onInitializeServer() {
@@ -42,33 +38,27 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
                     .then(literal("reload").executes(context -> {
                         context.getSource().sendFeedback(new LiteralText("Reloading nodes..."), true);
                         loadNodeData();
-                        MinecraftServer server = context.getSource().getServer();
-                        if (nodeData.isPresent()) {
-                            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                                CommandNetwork.sendNodeDataToClient(player, nodeData.get());
-                            }
-                        }
                         return 1;
                     })));
         });
 
+        NodeChangeWatcher.init();
         loadNodeData();
-
-        ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
-            nodeData.ifPresent(data -> CommandNetwork.sendNodeDataToClient(handler.player, data));
-        }));
     }
 
     public static void loadNodeData() {
         try {
             Reader reader = new FileReader(modConfig.node_path);
             NodeData data = GSON.fromJson(reader, NodeData.class);
-            nodeData = Optional.ofNullable(data);
+            if (data != null) nodeData = data;
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error(e);
-            nodeData = Optional.empty();
         }
+    }
+
+    public static NodeData getNodeData() {
+        return nodeData;
     }
 
 }
