@@ -1,6 +1,5 @@
 package cn.dancingsnow.mcdrssc.server;
 
-import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
 import cn.dancingsnow.mcdrssc.command.NodeData;
 import cn.dancingsnow.mcdrssc.config.ModConfig;
 import cn.dancingsnow.mcdrssc.networking.CommandNetwork;
@@ -11,7 +10,11 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileReader;
 import java.io.Reader;
@@ -23,6 +26,8 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
     public static final String MOD_ID = "mcdrssc";
 
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
+
+    public static Logger LOGGER = LogManager.getLogger();
 
     public static ModConfig modConfig;
     public static Optional<NodeData> nodeData;
@@ -37,6 +42,12 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
                     .then(literal("reload").executes(context -> {
                         context.getSource().sendMessage(Text.literal("Reloading nodes..."));
                         loadNodeData();
+                        MinecraftServer server = context.getSource().getServer();
+                        if (nodeData.isPresent()) {
+                            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                                CommandNetwork.sendNodeDataToClient(player, nodeData.get());
+                            }
+                        }
                         return 1;
                     })));
         }));
@@ -55,7 +66,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
             nodeData = Optional.ofNullable(data);
         } catch (Exception e) {
             e.printStackTrace();
-            MCDRCommandClient.LOGGER.error(e);
+            LOGGER.error(e);
             nodeData = Optional.empty();
         }
     }
