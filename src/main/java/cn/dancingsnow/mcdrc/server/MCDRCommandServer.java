@@ -2,8 +2,6 @@ package cn.dancingsnow.mcdrc.server;
 
 import cn.dancingsnow.mcdrc.command.NodeData;
 import cn.dancingsnow.mcdrc.config.ModConfig;
-import cn.dancingsnow.mcdrc.command.NodeData;
-import cn.dancingsnow.mcdrc.config.ModConfig;
 import cn.dancingsnow.mcdrc.networking.CommandNetwork;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
