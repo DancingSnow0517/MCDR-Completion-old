@@ -3,7 +3,7 @@ package cn.dancingsnow.mcdrssc.mixin;
 import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import net.minecraft.client.gui.screen.ChatInputSuggestor;
+import net.minecraft.client.gui.screen.CommandSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.command.CommandSource;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 
-@Mixin(ChatInputSuggestor.class)
+@Mixin(CommandSuggestor.class)
 public abstract class ChatInputSuggestorMixin {
 
     @Shadow
