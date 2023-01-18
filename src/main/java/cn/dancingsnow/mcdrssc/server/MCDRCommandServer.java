@@ -30,7 +30,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
     public static Logger LOGGER = LogManager.getLogger();
 
     public static ModConfig modConfig;
-    public static Optional<NodeData> nodeData;
+    public static NodeData nodeData = null;
 
     @Override
     public void onInitializeServer() {
@@ -42,33 +42,26 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
                     .then(literal("reload").executes(context -> {
                         context.getSource().sendMessage(Text.literal("Reloading nodes..."));
                         loadNodeData();
-                        MinecraftServer server = context.getSource().getServer();
-                        if (nodeData.isPresent()) {
-                            for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                                CommandNetwork.sendNodeDataToClient(player, nodeData.get());
-                            }
-                        }
                         return 1;
                     })));
         }));
 
         loadNodeData();
-
-        ServerPlayConnectionEvents.JOIN.register(((handler, sender, server) -> {
-            nodeData.ifPresent(data -> CommandNetwork.sendNodeDataToClient(handler.player, data));
-        }));
     }
 
     public static void loadNodeData() {
         try {
             Reader reader = new FileReader(modConfig.node_path);
             NodeData data = GSON.fromJson(reader, NodeData.class);
-            nodeData = Optional.ofNullable(data);
+            if (data != null) nodeData = data;
         } catch (Exception e) {
             e.printStackTrace();
             LOGGER.error(e);
-            nodeData = Optional.empty();
         }
+    }
+
+    public static NodeData getNodeData() {
+        return nodeData;
     }
 
 }

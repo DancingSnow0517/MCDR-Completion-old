@@ -1,4 +1,4 @@
-package cn.dancingsnow.mcdrssc.mixin;
+package cn.dancingsnow.mcdrssc.mixin.client;
 
 import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
 import com.mojang.brigadier.suggestion.Suggestions;
