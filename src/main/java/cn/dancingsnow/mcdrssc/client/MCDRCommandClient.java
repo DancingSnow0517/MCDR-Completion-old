@@ -1,9 +1,9 @@
-package cn.dancingsnow.mcdr_command.client;
+package cn.dancingsnow.mcdrssc.client;
 
-import cn.dancingsnow.mcdr_command.command.Node;
-import cn.dancingsnow.mcdr_command.command.NodeData;
-import cn.dancingsnow.mcdr_command.command.NodeType;
-import cn.dancingsnow.mcdr_command.networking.CommandNetwork;
+import cn.dancingsnow.mcdrssc.command.Node;
+import cn.dancingsnow.mcdrssc.command.NodeData;
+import cn.dancingsnow.mcdrssc.command.NodeType;
+import cn.dancingsnow.mcdrssc.networking.CommandNetwork;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.api.ClientModInitializer;
@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class MCDRCommandClient implements ClientModInitializer {
-    public static final String MOD_ID = "mcdr_command";
+    public static final String MOD_ID = "mcdrssc";
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     public static Logger LOGGER = LogManager.getLogger();
 

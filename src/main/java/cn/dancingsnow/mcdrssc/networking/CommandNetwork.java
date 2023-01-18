@@ -1,9 +1,9 @@
-package cn.dancingsnow.mcdr_command.networking;
+package cn.dancingsnow.mcdrssc.networking;
 
-import cn.dancingsnow.mcdr_command.client.MCDRCommandClient;
+import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
 
-import cn.dancingsnow.mcdr_command.command.NodeData;
-import cn.dancingsnow.mcdr_command.server.MCDRCommandServer;
+import cn.dancingsnow.mcdrssc.command.NodeData;
+import cn.dancingsnow.mcdrssc.server.MCDRCommandServer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;

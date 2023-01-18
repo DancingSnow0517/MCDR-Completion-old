@@ -1,4 +1,4 @@
-package cn.dancingsnow.mcdr_command.command;
+package cn.dancingsnow.mcdrssc.command;
 
 public enum NodeType {
     LITERAL,

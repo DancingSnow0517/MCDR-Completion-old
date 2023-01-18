@@ -1,9 +1,9 @@
-package cn.dancingsnow.mcdr_command.server;
+package cn.dancingsnow.mcdrssc.server;
 
-import cn.dancingsnow.mcdr_command.client.MCDRCommandClient;
-import cn.dancingsnow.mcdr_command.command.NodeData;
-import cn.dancingsnow.mcdr_command.config.ModConfig;
-import cn.dancingsnow.mcdr_command.networking.CommandNetwork;
+import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
+import cn.dancingsnow.mcdrssc.command.NodeData;
+import cn.dancingsnow.mcdrssc.config.ModConfig;
+import cn.dancingsnow.mcdrssc.networking.CommandNetwork;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -20,7 +20,7 @@ import java.util.Optional;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class MCDRCommandServer implements DedicatedServerModInitializer {
-    public static final String MOD_ID = "mcdr_command";
+    public static final String MOD_ID = "mcdrssc";
 
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
@@ -33,7 +33,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
         modConfig = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(literal("mcdreforged").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
+            dispatcher.register(literal("mcdrssc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                     .then(literal("reload").executes(context -> {
                         context.getSource().sendMessage(Text.literal("Reloading nodes..."));
                         loadNodeData();

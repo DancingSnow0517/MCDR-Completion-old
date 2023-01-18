@@ -1,22 +1,27 @@
 {
   "schemaVersion": 1,
-  "id": "mcdr_command",
+  "id": "mcdrssc",
   "version": "${version}",
-  "name": "MCDR Command",
-  "description": "",
-  "authors": [],
-  "contact": {},
-  "license": "MIT",
+  "name": "MCDR-ServerSidedCompletion",
+  "description": "A fabric mod adds client completion for MCDR",
+  "authors": [
+    "DancingSnow"
+  ],
+  "contact": {
+    "sources": "https://github.com/DancingSnow0517/MCDR-Command",
+    "issues": "https://github.com/DancingSnow0517/MCDR-Command/issues"
+  },
+  "license": "GPL-3.0",
   "icon": "assets/mcdr_command/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "cn.dancingsnow.mcdr_command.client.MCDRCommandClient"
+      "cn.dancingsnow.mcdrssc.client.MCDRCommandClient"
     ],
     "main": [
     ],
     "server": [
-      "cn.dancingsnow.mcdr_command.server.MCDRCommandServer"
+      "cn.dancingsnow.mcdrssc.server.MCDRCommandServer"
     ]
   },
   "mixins": [
@@ -25,6 +30,7 @@
   "depends": {
     "fabricloader": ">=0.14.12",
     "fabric": "*",
-    "minecraft": "1.19.2"
+    "minecraft": "1.19.2",
+    "cloth-config": "*"
   }
 }
