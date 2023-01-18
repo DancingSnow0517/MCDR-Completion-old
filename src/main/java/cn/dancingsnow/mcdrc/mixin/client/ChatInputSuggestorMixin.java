@@ -33,11 +33,11 @@ public abstract class ChatInputSuggestorMixin {
         return 0;
     }
 
-    @Shadow public abstract void show(boolean narrateFirstSuggestion);
-
     @Shadow private boolean completingSuggestions;
 
-    @Shadow @Nullable private ChatInputSuggestor.@Nullable SuggestionWindow window;
+    @Shadow @Nullable private CommandSuggestor.@Nullable SuggestionWindow window;
+
+    @Shadow public abstract void showSuggestions(boolean narrateFirstSuggestion);
 
     @Inject(method = "refresh()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/TextFieldWidget;getCursor()I", shift = At.Shift.AFTER), cancellable = true)
     public void refreshMixin(CallbackInfo ci) {
@@ -45,14 +45,14 @@ public abstract class ChatInputSuggestorMixin {
         if (text.startsWith("!")) {
             String string = text.substring(0, this.textField.getCursor());
             if (this.window == null || !this.completingSuggestions) {
-                int word = getStartOfCurrentWord(string);
+                int word = getLastPlayerNameStart(string);
                 Collection<String> suggestion = MCDRCommandClient.getSuggestion(string);
                 if (suggestion.size() > 0) {
                     this.pendingSuggestions = CommandSource.suggestMatching(suggestion,
                             new SuggestionsBuilder(string, word));
                     this.pendingSuggestions.thenRun(() -> {
                         if (this.pendingSuggestions.isDone()) {
-                            this.show(true);
+                            this.showSuggestions(true);
                         }
                     });
                 }
