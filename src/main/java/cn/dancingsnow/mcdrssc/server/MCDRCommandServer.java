@@ -40,7 +40,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
         CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
             dispatcher.register(literal("mcdrssc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                     .then(literal("reload").executes(context -> {
-                        context.getSource().sendMessage(Text.literal("Reloading nodes..."));
+                        context.getSource().sendFeedback(Text.literal("Reloading nodes..."), true);
                         loadNodeData();
                         MinecraftServer server = context.getSource().getServer();
                         if (nodeData.isPresent()) {
