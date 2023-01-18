@@ -1,9 +1,9 @@
-package cn.dancingsnow.mcdrssc.client;
+package cn.dancingsnow.mcdrc.client;
 
-import cn.dancingsnow.mcdrssc.command.Node;
-import cn.dancingsnow.mcdrssc.command.NodeData;
-import cn.dancingsnow.mcdrssc.command.NodeType;
-import cn.dancingsnow.mcdrssc.networking.CommandNetwork;
+import cn.dancingsnow.mcdrc.command.Node;
+import cn.dancingsnow.mcdrc.command.NodeData;
+import cn.dancingsnow.mcdrc.command.NodeType;
+import cn.dancingsnow.mcdrc.networking.CommandNetwork;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.api.ClientModInitializer;

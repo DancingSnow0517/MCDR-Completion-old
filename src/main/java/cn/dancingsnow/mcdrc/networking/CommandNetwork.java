@@ -1,14 +1,13 @@
-package cn.dancingsnow.mcdrssc.networking;
+package cn.dancingsnow.mcdrc.networking;
 
-import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
+import cn.dancingsnow.mcdrc.client.MCDRCommandClient;
 
-import cn.dancingsnow.mcdrssc.command.NodeData;
-import cn.dancingsnow.mcdrssc.server.MCDRCommandServer;
+import cn.dancingsnow.mcdrc.command.NodeData;
+import cn.dancingsnow.mcdrc.server.MCDRCommandServer;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Identifier;
 
 public class CommandNetwork {

@@ -1,8 +1,8 @@
-package cn.dancingsnow.mcdrssc.mixin;
+package cn.dancingsnow.mcdrc.mixin;
 
-import cn.dancingsnow.mcdrssc.command.NodeData;
-import cn.dancingsnow.mcdrssc.networking.CommandNetwork;
-import cn.dancingsnow.mcdrssc.server.MCDRCommandServer;
+import cn.dancingsnow.mcdrc.command.NodeData;
+import cn.dancingsnow.mcdrc.networking.CommandNetwork;
+import cn.dancingsnow.mcdrc.server.MCDRCommandServer;
 import net.minecraft.server.network.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;

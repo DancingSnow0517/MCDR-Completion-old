@@ -1,4 +1,4 @@
-package cn.dancingsnow.mcdrssc.command;
+package cn.dancingsnow.mcdrc.command;
 
 import java.util.ArrayList;
 

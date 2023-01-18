@@ -1,4 +1,4 @@
-package cn.dancingsnow.mcdrssc.server;
+package cn.dancingsnow.mcdrc.server;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
