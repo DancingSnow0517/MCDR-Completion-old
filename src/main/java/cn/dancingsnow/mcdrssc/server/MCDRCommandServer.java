@@ -46,6 +46,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
                     })));
         }));
 
+        NodeChangeWatcher.init();
         loadNodeData();
     }
 
