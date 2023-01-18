@@ -29,7 +29,7 @@ public abstract class ChatInputSuggestorMixin {
     private CompletableFuture<Suggestions> pendingSuggestions;
 
     @Shadow
-    protected static int getStartOfCurrentWord(String input) {
+    private static int getStartOfCurrentWord(String input) {
         return 0;
     }
 
