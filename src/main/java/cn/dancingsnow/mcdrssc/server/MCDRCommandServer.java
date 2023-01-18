@@ -8,7 +8,7 @@ import com.google.gson.GsonBuilder;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -37,10 +37,10 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         modConfig = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
-        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
+        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             dispatcher.register(literal("mcdrssc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                     .then(literal("reload").executes(context -> {
-                        context.getSource().sendMessage(Text.literal("Reloading nodes..."));
+                        context.getSource().sendFeedback(Text.of("Reloading nodes..."), true);
                         loadNodeData();
                         MinecraftServer server = context.getSource().getServer();
                         if (nodeData.isPresent()) {
