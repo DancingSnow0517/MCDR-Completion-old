@@ -1,4 +1,4 @@
-package cn.dancingsnow.mcdrc.mixin;
+package cn.dancingsnow.mcdrc.mixin.client;
 
 import cn.dancingsnow.mcdrc.client.MCDRCommandClient;
 import com.mojang.brigadier.suggestion.Suggestions;
@@ -33,7 +33,8 @@ public abstract class ChatInputSuggestorMixin {
         return 0;
     }
 
-    @Inject(method = "refresh()V", at = @At("RETURN"))
+
+    @Inject(method = "refresh()V", at = @At(value = "RETURN"))
     public void refreshMixin(CallbackInfo ci) {
         String text = this.textField.getText();
         if (text.startsWith("!")) {
@@ -43,6 +44,11 @@ public abstract class ChatInputSuggestorMixin {
             if (suggestion.size() > 0) {
                 this.pendingSuggestions = CommandSource.suggestMatching(suggestion,
                         new SuggestionsBuilder(string, word));
+//                this.pendingSuggestions.thenRun(() -> {
+//                    if (this.pendingSuggestions.isDone()) {
+//                        this.show(true);
+//                    }
+//                });
             }
         }
     }
