@@ -33,7 +33,7 @@ jobs:
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: build
-        run: build
+        run: ./gradlew build
       - name: Find correct JAR
         id: findjar
         if: ${{ runner.os == 'Linux' && matrix.java == '17' }}
