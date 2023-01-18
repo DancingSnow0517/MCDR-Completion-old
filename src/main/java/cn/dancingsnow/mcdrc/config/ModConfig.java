@@ -1,6 +1,6 @@
-package cn.dancingsnow.mcdrssc.config;
+package cn.dancingsnow.mcdrc.config;
 
-import cn.dancingsnow.mcdrssc.server.MCDRCommandServer;
+import cn.dancingsnow.mcdrc.server.MCDRCommandServer;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 

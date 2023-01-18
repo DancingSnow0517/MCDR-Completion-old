@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "mcdrssc",
+  "id": "mcdrc",
   "version": "${version}",
-  "name": "MCDR-ServerSidedCompletion",
+  "name": "MCDR-Completion",
   "description": "A fabric mod adds client completion for MCDR",
   "authors": [
     "DancingSnow"
@@ -12,20 +12,20 @@
     "issues": "https://github.com/DancingSnow0517/MCDR-Command/issues"
   },
   "license": "GPL-3.0",
-  "icon": "assets/mcdr_command/icon.png",
+  "icon": "assets/mcdrc/icon.png",
   "environment": "*",
   "entrypoints": {
     "client": [
-      "cn.dancingsnow.mcdrssc.client.MCDRCommandClient"
+      "cn.dancingsnow.mcdrc.client.MCDRCommandClient"
     ],
     "main": [
     ],
     "server": [
-      "cn.dancingsnow.mcdrssc.server.MCDRCommandServer"
+      "cn.dancingsnow.mcdrc.server.MCDRCommandServer"
     ]
   },
   "mixins": [
-    "mcdrssc.mixins.json"
+    "mcdrc.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14.12",
