@@ -33,11 +33,11 @@ public abstract class ChatInputSuggestorMixin {
         return 0;
     }
 
-    @Shadow public abstract void show(boolean narrateFirstSuggestion);
+    @Shadow public abstract void showSuggestions(boolean narrateFirstSuggestion);
 
     @Shadow private boolean completingSuggestions;
 
-    @Shadow @Nullable private ChatInputSuggestor.@Nullable SuggestionWindow window;
+    @Shadow @Nullable private CommandSuggestor.@Nullable SuggestionWindow window;
 
     @Inject(method = "refresh()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/TextFieldWidget;getCursor()I", shift = At.Shift.AFTER), cancellable = true)
     public void refreshMixin(CallbackInfo ci) {
@@ -52,7 +52,7 @@ public abstract class ChatInputSuggestorMixin {
                             new SuggestionsBuilder(string, word));
                     this.pendingSuggestions.thenRun(() -> {
                         if (this.pendingSuggestions.isDone()) {
-                            this.show(true);
+                            this.showSuggestions(true);
                         }
                     });
                 }
