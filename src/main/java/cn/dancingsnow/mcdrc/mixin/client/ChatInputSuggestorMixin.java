@@ -33,9 +33,8 @@ public abstract class ChatInputSuggestorMixin {
         return 0;
     }
 
-    @Shadow public abstract void show(boolean narrateFirstSuggestion);
 
-    @Inject(method = "refresh()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/TextFieldWidget;getCursor()I", shift = At.Shift.AFTER))
+    @Inject(method = "refresh()V", at = @At(value = "RETURN"))
     public void refreshMixin(CallbackInfo ci) {
         String text = this.textField.getText();
         if (text.startsWith("!")) {
@@ -45,11 +44,11 @@ public abstract class ChatInputSuggestorMixin {
             if (suggestion.size() > 0) {
                 this.pendingSuggestions = CommandSource.suggestMatching(suggestion,
                         new SuggestionsBuilder(string, word));
-                this.pendingSuggestions.thenRun(() -> {
-                    if (this.pendingSuggestions.isDone()) {
-                        this.show(true);
-                    }
-                });
+//                this.pendingSuggestions.thenRun(() -> {
+//                    if (this.pendingSuggestions.isDone()) {
+//                        this.show(true);
+//                    }
+//                });
             }
         }
     }
