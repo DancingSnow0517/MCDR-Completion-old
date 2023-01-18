@@ -11,9 +11,12 @@
   "environment": "*",
   "entrypoints": {
     "client": [
+      "cn.dancingsnow.mcdr_command.client.MCDRCommandClient"
     ],
     "main": [
-      "cn.dancingsnow.mcdr_command.MCDRCommand"
+    ],
+    "server": [
+      "cn.dancingsnow.mcdr_command.server.MCDRCommandServer"
     ]
   },
   "mixins": [

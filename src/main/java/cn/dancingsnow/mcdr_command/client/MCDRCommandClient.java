@@ -1,63 +1,43 @@
-package cn.dancingsnow.mcdr_command;
+package cn.dancingsnow.mcdr_command.client;
 
 import cn.dancingsnow.mcdr_command.command.Node;
 import cn.dancingsnow.mcdr_command.command.NodeData;
 import cn.dancingsnow.mcdr_command.command.NodeType;
-import cn.dancingsnow.mcdr_command.config.ModConfig;
+import cn.dancingsnow.mcdr_command.networking.CommandNetwork;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.minecraft.text.Text;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-import static net.minecraft.server.command.CommandManager.literal;
-
-public class MCDRCommand implements ModInitializer {
+@Environment(EnvType.CLIENT)
+public class MCDRCommandClient implements ClientModInitializer {
     public static final String MOD_ID = "mcdr_command";
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     public static Logger LOGGER = LogManager.getLogger();
-    public static ModConfig modConfig;
-    public static Optional<NodeData> nodeData;
+
+    public static Optional<NodeData> nodeData = Optional.empty();
+
 
     @Override
-    public void onInitialize() {
-        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
-        modConfig = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+    public void onInitializeClient() {
 
-        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
-            dispatcher.register(literal("mcdreforged").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
-                    .then(literal("reload").executes(context -> {
-                        // TODO: reload
-                        context.getSource().sendMessage(Text.literal("Reloading nodes..."));
-                        loadNodeData();
-                        return 1;
-                    })));
+        ClientPlayNetworking.registerGlobalReceiver(CommandNetwork.COMMAND_PACKET_ID, ((client, handler, buf, responseSender) -> {
+            try {
+                nodeData = Optional.ofNullable(GSON.fromJson(buf.readString(), NodeData.class));
+            } catch (Exception e) {
+                e.printStackTrace();
+                LOGGER.error("fail to receiver command packet: ", e);
+            }
         }));
 
-        loadNodeData();
-
-    }
-
-    public static void loadNodeData() {
-        try {
-            Reader reader = new FileReader(modConfig.node_path);
-            NodeData data = GSON.fromJson(reader, NodeData.class);
-            nodeData = Optional.ofNullable(data);
-        } catch (Exception e) {
-            e.printStackTrace();
-            LOGGER.error(e);
-            nodeData = Optional.empty();
-        }
     }
 
     public static Collection<String> getSuggestion(String text) {
@@ -81,12 +61,12 @@ public class MCDRCommand implements ModInitializer {
                     int times;
                     if (text.endsWith(" ")) {
                         // find args[word-1] suggestion
-                         times = word-1;
+                        times = word - 1;
                     } else {
                         // find args[word-2] suggestion
-                        times = word-2;
+                        times = word - 2;
                     }
-                    for (int i = 1; i<=times; i++) {
+                    for (int i = 1; i <= times; i++) {
                         boolean flag = false;
                         for (Node node : currNode.children) {
                             if (args[i].equalsIgnoreCase(node.name)) {
@@ -113,5 +93,4 @@ public class MCDRCommand implements ModInitializer {
             return new ArrayList<>();
         }
     }
-
 }
