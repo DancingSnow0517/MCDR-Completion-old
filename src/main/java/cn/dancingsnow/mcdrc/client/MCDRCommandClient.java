@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class MCDRCommandClient implements ClientModInitializer {
-    public static final String MOD_ID = "mcdrssc";
+    public static final String MOD_ID = "mcdrc";
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     public static Logger LOGGER = LogManager.getLogger();
 
