@@ -1,8 +1,8 @@
-package cn.dancingsnow.mcdrssc.server;
+package cn.dancingsnow.mcdrc.server;
 
-import cn.dancingsnow.mcdrssc.command.NodeData;
-import cn.dancingsnow.mcdrssc.config.ModConfig;
-import cn.dancingsnow.mcdrssc.networking.CommandNetwork;
+import cn.dancingsnow.mcdrc.command.NodeData;
+import cn.dancingsnow.mcdrc.config.ModConfig;
+import cn.dancingsnow.mcdrc.networking.CommandNetwork;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class MCDRCommandServer implements DedicatedServerModInitializer {
-    public static final String MOD_ID = "mcdrssc";
+    public static final String MOD_ID = "mcdrc";
 
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
 
@@ -38,9 +38,13 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
         modConfig = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
 
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
-            dispatcher.register(literal("mcdrssc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
+            dispatcher.register(literal("mcdrc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                     .then(literal("reload").executes(context -> {
                         context.getSource().sendFeedback(new LiteralText("Reloading nodes..."), true);
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> {
+            dispatcher.register(literal("mcdrc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
+                    .then(literal("reload").executes(context -> {
+                        context.getSource().sendFeedback(Text.literal("Reloading nodes..."), true);
                         loadNodeData();
                         MinecraftServer server = context.getSource().getServer();
                         if (nodeData.isPresent()) {

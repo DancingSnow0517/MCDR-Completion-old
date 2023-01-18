@@ -1,6 +1,6 @@
-package cn.dancingsnow.mcdrssc.mixin;
+package cn.dancingsnow.mcdrc.mixin;
 
-import cn.dancingsnow.mcdrssc.client.MCDRCommandClient;
+import cn.dancingsnow.mcdrc.client.MCDRCommandClient;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.client.gui.screen.CommandSuggestor;
