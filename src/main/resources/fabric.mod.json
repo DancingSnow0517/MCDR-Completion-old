@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "id": "mcdr_command",
+  "version": "${version}",
+  "name": "MCDR Command",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/mcdr_command/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+    ],
+    "main": [
+      "cn.dancingsnow.mcdr_command.MCDRCommand"
+    ],
+    "modmenu": [
+      "cn.dancingsnow.mcdr_command.config.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "mcdr_command.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.12",
+    "fabric": "*",
+    "minecraft": "1.19.2"
+  }
+}
