@@ -12,7 +12,7 @@ import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
+import net.minecraft.text.LiteralText;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,7 +40,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
         CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> {
             dispatcher.register(literal("mcdrssc").requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                     .then(literal("reload").executes(context -> {
-                        context.getSource().sendFeedback(Text.of("Reloading nodes..."), true);
+                        context.getSource().sendFeedback(new LiteralText("Reloading nodes..."), true);
                         loadNodeData();
                         MinecraftServer server = context.getSource().getServer();
                         if (nodeData.isPresent()) {
