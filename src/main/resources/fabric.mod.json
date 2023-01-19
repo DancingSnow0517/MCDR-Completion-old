@@ -8,6 +8,7 @@
     "DancingSnow"
   ],
   "contact": {
+    "homepage": "https://modrinth.com/mod/mcdr-completion",
     "sources": "https://github.com/DancingSnow0517/MCDR-Command",
     "issues": "https://github.com/DancingSnow0517/MCDR-Command/issues"
   },
@@ -30,7 +31,6 @@
   "depends": {
     "fabricloader": ">=0.14.12",
     "fabric": "*",
-    "minecraft": "1.18.2",
-    "cloth-config": "*"
+    "minecraft": "1.18.2"
   }
 }

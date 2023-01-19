@@ -4,6 +4,8 @@ import cn.dancingsnow.mcdrc.client.MCDRCommandClient;
 import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.client.gui.screen.CommandSuggestor;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.ChatInputSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.command.CommandSource;
 import org.jetbrains.annotations.Nullable;
@@ -39,10 +41,13 @@ public abstract class ChatInputSuggestorMixin {
 
     @Shadow @Nullable private CommandSuggestor.@Nullable SuggestionWindow window;
 
+    @Shadow @Final private MinecraftClient client;
+
     @Inject(method = "refresh()V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/TextFieldWidget;getCursor()I", shift = At.Shift.AFTER), cancellable = true)
     public void refreshMixin(CallbackInfo ci) {
         String text = this.textField.getText();
-        if (text.startsWith("!")) {
+        if (text.startsWith("!") || text.startsWith("！")) {
+            text = text.replace('！', '!');
             String string = text.substring(0, this.textField.getCursor());
             if (this.window == null || !this.completingSuggestions) {
                 int word = getStartOfCurrentWord(string);
@@ -55,6 +60,9 @@ public abstract class ChatInputSuggestorMixin {
                             this.showSuggestions(true);
                         }
                     });
+                } else {
+                    Collection<String> player_list = this.client.player.networkHandler.getCommandSource().getChatSuggestions();
+                    this.pendingSuggestions = CommandSource.suggestMatching(player_list, new SuggestionsBuilder(string, word));
                 }
             }
             ci.cancel();
