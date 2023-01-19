@@ -46,6 +46,7 @@ public abstract class ChatInputSuggestorMixin {
     public void refreshMixin(CallbackInfo ci) {
         String text = this.textField.getText();
         if (text.startsWith("!") || text.startsWith("！")) {
+            text = text.replace('！', '!');
             String string = text.substring(0, this.textField.getCursor());
             if (this.window == null || !this.completingSuggestions) {
                 int word = getStartOfCurrentWord(string);
