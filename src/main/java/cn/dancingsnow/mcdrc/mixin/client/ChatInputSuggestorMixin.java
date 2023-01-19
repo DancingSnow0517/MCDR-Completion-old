@@ -5,7 +5,6 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import net.minecraft.client.gui.screen.CommandSuggestor;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.ChatInputSuggestor;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.command.CommandSource;
 import org.jetbrains.annotations.Nullable;
@@ -61,7 +60,7 @@ public abstract class ChatInputSuggestorMixin {
                         }
                     });
                 } else {
-                    Collection<String> player_list = this.client.player.networkHandler.getCommandSource().getChatSuggestions();
+                    Collection<String> player_list = this.client.player.networkHandler.getCommandSource().getPlayerNames();
                     this.pendingSuggestions = CommandSource.suggestMatching(player_list, new SuggestionsBuilder(string, word));
                 }
             }

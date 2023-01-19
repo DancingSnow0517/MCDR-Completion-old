@@ -41,11 +41,11 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
 
         modConfig.save();
 
-        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> dispatcher.register(
+        CommandRegistrationCallback.EVENT.register(((dispatcher, dedicated) -> dispatcher.register(
                 literal("mcdrc")
                         .requires(serverCommandSource -> serverCommandSource.hasPermissionLevel(2))
                         .then(literal("reload").executes(context -> {
-                            context.getSource().sendFeedback(Text.literal("Reloading nodes..."), true);
+                            context.getSource().sendFeedback(new LiteralText("Reloading nodes..."), true);
                             loadNodeData();
                             return 1;
                         })))));
