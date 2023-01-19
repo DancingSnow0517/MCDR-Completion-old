@@ -37,7 +37,7 @@ public class NodeChangeWatcher extends Thread {
         this.setPriority(Thread.MIN_PRIORITY);
     }
 
-    private final Path nodePath = Path.of(MCDRCommandServer.modConfig.node_path);
+    private final Path nodePath = Path.of(MCDRCommandServer.modConfig.getNodePath());
     private WatchService watchService;
 
     @Override
