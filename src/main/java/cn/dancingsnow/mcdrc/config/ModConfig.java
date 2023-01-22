@@ -2,6 +2,7 @@ package cn.dancingsnow.mcdrc.config;
 
 import cn.dancingsnow.mcdrc.server.MCDRCommandServer;
 import com.google.gson.JsonParseException;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -71,15 +72,16 @@ public class ModConfig {
     }
 
     public String getNodePath() {
-        return data.node_path;
+        return data.nodePath;
     }
 
     public void setNodePath(String node_path) {
-        data.node_path = node_path;
+        data.nodePath = node_path;
         save();
     }
 
     public static class ConfigData {
-        public String node_path = "config/node.json";
+        @SerializedName("node_path")
+        public String nodePath = "config/node.json";
     }
 }
