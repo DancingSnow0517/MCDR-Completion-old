@@ -18,7 +18,7 @@ public class MCDRCommandServer implements DedicatedServerModInitializer {
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create();
     public static Logger LOGGER = LogManager.getLogger();
     public static ModConfig modConfig = new ModConfig(
-            FabricLoader.getInstance().getConfigDir().resolve("%s".formatted(MOD_ID))
+            FabricLoader.getInstance().getConfigDir().resolve("%s.json".formatted(MOD_ID))
     );
     public static NodeData nodeData = null;
 
