@@ -15,7 +15,6 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class MCDRCommandClient implements ClientModInitializer {
@@ -23,7 +22,7 @@ public class MCDRCommandClient implements ClientModInitializer {
     public static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     public static Logger LOGGER = LogManager.getLogger();
 
-    public static Optional<NodeData> nodeData = Optional.empty();
+    public static NodeData nodeData = null;
 
 
     @Override
@@ -31,7 +30,7 @@ public class MCDRCommandClient implements ClientModInitializer {
 
         ClientPlayNetworking.registerGlobalReceiver(CommandNetwork.COMMAND_PACKET_ID, ((client, handler, buf, responseSender) -> {
             try {
-                nodeData = Optional.ofNullable(GSON.fromJson(buf.readString(), NodeData.class));
+                nodeData = GSON.fromJson(buf.readString(1 << 20), NodeData.class);
             } catch (Exception e) {
                 e.printStackTrace();
                 LOGGER.error("fail to receiver command packet: ", e);
@@ -41,18 +40,18 @@ public class MCDRCommandClient implements ClientModInitializer {
     }
 
     public static Collection<String> getSuggestion(String text) {
-        if (nodeData.isPresent()) {
+        if (nodeData != null) {
             Collection<String> rt = new ArrayList<>();
             String[] args = text.split(" ");
             int word = args.length;
             if (word == 1 && !text.endsWith(" ")) {
-                for (Node node : nodeData.get().data) {
+                for (Node node : nodeData.data) {
                     if (node.type.equals(NodeType.LITERAL)) rt.add(node.name);
                 }
                 return rt;
             } else {
                 Node currNode = null;
-                for (Node node : nodeData.get().data) {
+                for (Node node : nodeData.data) {
                     if (node.name.equalsIgnoreCase(args[0])) {
                         currNode = node;
                     }
