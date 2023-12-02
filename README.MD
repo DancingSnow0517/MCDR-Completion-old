@@ -1,3 +1,5 @@
+# Reconstructed!!!, see new project [MCDR-Completion](https://github.com/DancingSnow0517/MCDR-Completion)!!!
+
 # MCDR-Completion
 
 ![](src/main/resources/assets/mcdrc/icon.png)
